@@ -1,2 +1,3 @@
 # news-gpt
-Uses OpenAI's GPT-3x engine to create headlines and news feeds
+
+News-GPT Uses OpenAI's GPT-3x engine to create headlines and news feeds
