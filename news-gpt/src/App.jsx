@@ -30,7 +30,7 @@ function getMessage(message){
 }
 
 
-function App() {
+const App = () =>  {
   
   return (
    <div>
@@ -47,10 +47,11 @@ function App() {
   );
 }
 
-function List(){
+const List = () => {
+  
   return (
     <ul>
-      {authorList.map(function (item) {
+      {authorList.map((item) => {
         return (
           <li key={item.objectID}>
             <span>
@@ -66,13 +67,11 @@ function List(){
   )
 }
 
-function Search(){
-  return(
-    <div>
+const Search = () => {
+   <div>
       <label htmlFor="search">Search: </label>
       <input id="search" type="text" /> 
-    </div>   
-  );
+  </div>   
 }
 
 export default App;
