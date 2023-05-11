@@ -74,8 +74,6 @@ const Search = () => {
     console.log(event);
     // value of target (here: input HTML element)
     console.log(event.target.value);
-    // native HTML event
-    console.log(event.nativeEvent)
   };
 
   const handleBlur = () => {
