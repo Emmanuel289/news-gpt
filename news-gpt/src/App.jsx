@@ -74,22 +74,19 @@ const Item = (props) => {
 };
 
 const Search = () => {
-
+  const [searchTerm, setSearchTerm] = React.useState('');
   const handleChange = (event) => {
-    // synthetic event
-    console.log(event);
-    // value of target (here: input HTML element)
-    console.log(event.target.value);
+   setSearchTerm(event.target.value);
   };
 
-  const handleBlur = () => {
-    console.log('Clicked outside search field')
-  }
 
   return (
   <div>
     <label htmlFor="search">Search: </label>
-    <input id="search" type="text" onChange={handleChange} onBlur={handleBlur} /> 
+    <input id="search" type="text" onChange={handleChange} /> 
+    <p>
+      Searching for <strong>{searchTerm}</strong>
+    </p>
   </div>  
   );  
 };
