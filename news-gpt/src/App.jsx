@@ -32,6 +32,10 @@ const App = () =>  {
       objectID: 1,
     }
   ]
+
+  const handleSearch = (event) => {
+    console.log(event.target.value);
+  };
   
   return (
    <div>
@@ -39,7 +43,7 @@ const App = () =>  {
 
      {/* <p><em>In the textbox below, type @ followed by a keyword for a news category (e.g. @sports to get the latest sports news)</em></p> */}
     
-      <Search />
+      <Search onSearch={handleSearch} />
 
       <hr/>
 
@@ -73,12 +77,13 @@ const Item = (props) => {
   )
 };
 
-const Search = () => {
+const Search = (props) => {
   const [searchTerm, setSearchTerm] = React.useState('');
   const handleChange = (event) => {
    setSearchTerm(event.target.value);
   };
 
+  props.onSearch(event);
 
   return (
   <div>
