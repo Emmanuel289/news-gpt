@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { React, useState } from "react";
 
 const welcomeMessage = {
   'greeting': 'Welcome',
@@ -33,7 +33,7 @@ const App = () =>  {
     }
   ]
 
-  const [searchTerm, setSearchTerm] = React.useState('');
+  const [searchTerm, setSearchTerm] = useState('React');
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value)
@@ -47,7 +47,7 @@ const App = () =>  {
 
      {/* <p><em>In the textbox below, type @ followed by a keyword for a news category (e.g. @sports to get the latest sports news)</em></p> */}
     
-      <Search onSearch={handleSearch} />
+      <Search search={searchTerm} onSearch={handleSearch} />
 
       <hr/>
       <List list={searchedStories} />
@@ -55,37 +55,37 @@ const App = () =>  {
   );
 }
 
-const List = (props) => {
+const List = ({ list }) => {
 
   return (
     <ul>
-      {props.list.map((item) => (
+      {list.map((item) => (
         <Item key={item.objectID} item={item} />
       ))}
     </ul>
   )  
 };
 
-const Item = (props) => {
+const Item = ({ item }) => {
 
   return (
-    <li key={props.item.objectID}>
+    <li key={item.objectID}>
       <span>
-        <a href={props.item.url}>{props.item.title}</a>
+        <a href={item.url}>{item.title}</a>
       </span>
-      <span>{props.item.author}</span>
-      <span>{props.item.num_comments}</span>
-      <span>{props.item.points}</span>
+      <span>{item.author}</span>
+      <span>{item.num_comments}</span>
+      <span>{item.points}</span>
     </li> 
   )
 };
 
-const Search = (props) => {
+const Search = ({ search, onSearch }) => {
 
   return (
   <div>
     <label htmlFor="search">Search: </label>
-    <input id="search" type="text" onChange={props.onSearch} /> 
+    <input id="search" type="text" value={search} onChange={onSearch} /> 
   </div>  
   );  
 };
