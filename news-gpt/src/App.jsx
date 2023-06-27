@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 
 const welcomeMessage = {
   'greeting': 'Welcome',
@@ -33,7 +33,13 @@ const App = () =>  {
     }
   ]
 
-  const [searchTerm, setSearchTerm] = useState('React');
+  const [searchTerm, setSearchTerm] = useState(localStorage.getItem('search') || 'React');  // use the value if its stored in the browser as initial state or default to React 
+
+
+  // Update the value in the browser's local storage to match the search term each time it changes anywhere in the app
+    useEffect(() => {
+      localStorage.setItem('search', searchTerm)  // store the search term in the browser's local storage
+    }, [searchTerm])
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value)
@@ -60,7 +66,7 @@ const List = ({ list }) => {
   return (
     <ul>
       {list.map((item) => (
-        <Item key={item.objectID} item={item} />
+        <Item key={objectID} item={item} />
       ))}
     </ul>
   )  
@@ -69,7 +75,7 @@ const List = ({ list }) => {
 const Item = ({ item }) => {
 
   return (
-    <li key={item.objectID}>
+    <li>
       <span>
         <a href={item.url}>{item.title}</a>
       </span>
