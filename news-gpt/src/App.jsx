@@ -56,7 +56,11 @@ const App = () =>  {
 
      {/* <p><em>In the textbox below, type @ followed by a keyword for a news category (e.g. @sports to get the latest sports news)</em></p> */}
     
-      <Search search={searchTerm} onSearch={handleSearch} />
+      <InputWithLabel 
+        id="search"
+        label="Search"
+        value={searchTerm}
+        onInputChange={handleSearch}/>
 
       <hr/>
       <List list={searchedStories} />
@@ -89,18 +93,22 @@ const Item = ({ item }) => {
   )
 };
 
-const Search = ({ search, onSearch }) => {
-
-  return (
+const InputWithLabel = ({ 
+  id, 
+  label, 
+  value, 
+  type = 'text', 
+  onInputChange,
+ }) => (
   <>
-    <label htmlFor="search">Search: </label>
+    <label htmlFor={id}>{label}</label>
+    &nbsp;
     <input 
-      id="search" 
-      type="text" 
-      value={search} 
-      onChange={onSearch} /> 
+      id={id}
+      type={type}
+      value={value} 
+      onChange={onInputChange} /> 
   </>  
-  );  
-};
+ ); 
 
 export default App;
