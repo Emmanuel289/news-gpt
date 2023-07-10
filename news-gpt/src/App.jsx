@@ -33,7 +33,7 @@ const App = () =>  {
     }
   ]
 
-  const [searchTerm, setSearchTerm] = useState(localStorage.getItem('search') || 'React');  // use the value if its stored in the browser as initial state or default to React 
+  const [searchTerm, setSearchTerm] = useState(localStorage.getItem('search') ?? 'React');  // use the value if its stored in the browser as initial state or default to React 
 
 
   // Update the value in the browser's local storage to match the search term each time it changes anywhere in the app
