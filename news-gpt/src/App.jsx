@@ -11,6 +11,15 @@ function getMessage(message){
   
 }
 
+const useStorageState = (key, initialState) => {
+  const [value, setValue] = useState(localStorage.getItem(key) || initialState);
+
+  useEffect(() => {
+    localStorage.setItem(key, value)
+  }, [searchTerm]);
+
+  return [value, setValue];
+};
 
 const App = () =>  {
 
@@ -33,13 +42,7 @@ const App = () =>  {
     }
   ]
 
-  const [searchTerm, setSearchTerm] = useState(localStorage.getItem('search') ?? 'React');  // use the value if its stored in the browser as initial state or default to React 
-
-
-  // Update the value in the browser's local storage to match the search term each time it changes anywhere in the app
-    useEffect(() => {
-      localStorage.setItem('search', searchTerm)  // store the search term in the browser's local storage
-    }, [searchTerm])
+  const [searchTerm, setSearchTerm] = useStorageState('search', 'React');
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value)
