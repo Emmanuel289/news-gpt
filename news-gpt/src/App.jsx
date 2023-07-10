@@ -16,7 +16,7 @@ const useStorageState = (key, initialState) => {
 
   useEffect(() => {
     localStorage.setItem(key, value)
-  }, [searchTerm]);
+  }, [value]);
 
   return [value, setValue];
 };
@@ -92,10 +92,14 @@ const Item = ({ item }) => {
 const Search = ({ search, onSearch }) => {
 
   return (
-  <div>
+  <>
     <label htmlFor="search">Search: </label>
-    <input id="search" type="text" value={search} onChange={onSearch} /> 
-  </div>  
+    <input 
+      id="search" 
+      type="text" 
+      value={search} 
+      onChange={onSearch} /> 
+  </>  
   );  
 };
 
