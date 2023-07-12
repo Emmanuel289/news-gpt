@@ -1,4 +1,4 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 
 const welcomeMessage = {
   'greeting': 'Welcome',
@@ -58,9 +58,12 @@ const App = () =>  {
     
       <InputWithLabel 
         id="search"
-        label="Search"
         value={searchTerm}
-        onInputChange={handleSearch}/>
+        isFocused
+        onInputChange={handleSearch}
+        >
+          <strong>Search:</strong>
+      </InputWithLabel>
 
       <hr/>
       <List list={searchedStories} />
@@ -95,20 +98,34 @@ const Item = ({ item }) => {
 
 const InputWithLabel = ({ 
   id, 
-  label, 
   value, 
-  type = 'text', 
+  type="text", 
   onInputChange,
- }) => (
+  isFocused,
+  children,
+ }) => {
+
+  const inputRef = useRef();
+
+  useEffect(() => {
+    if (isFocused && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isFocused]);
+
+  return (
   <>
-    <label htmlFor={id}>{label}</label>
+    <label htmlFor={id}>{children}</label>
     &nbsp;
     <input 
+      ref={inputRef}
       id={id}
       type={type}
       value={value} 
+      autoFocus={isFocused}
       onChange={onInputChange} /> 
   </>  
  ); 
+}
 
 export default App;
