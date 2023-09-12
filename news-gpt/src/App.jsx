@@ -11,6 +11,34 @@ function getMessage(message){
   
 }
 
+const initialStories = [
+  {
+    title: 'React',
+    url: 'https://reactjs.org',
+    author: 'Jordan Walke',
+    num_comments: 3,
+    points: 4,
+    objectID: 0,
+  },
+  {
+    title: 'Redux',
+    url: 'https://redux.js.org/',
+    author: 'Dan Abramov, Andrew Clark',
+    num_comments: 2,
+    points: 5,
+    objectID: 1,
+  }
+];
+ // Promise-based function that returns data to populate the list of stories
+
+ const getAsyncStories = () => (
+
+  new Promise((resolve) => 
+    setTimeout(() => resolve({ data : { stories: initialStories } })),
+    20000
+  )
+);
+
 const useStorageState = (key, initialState) => {
   const [value, setValue] = useState(localStorage.getItem(key) || initialState);
 
@@ -22,27 +50,14 @@ const useStorageState = (key, initialState) => {
 };
 
 const App = () =>  {
+  const [stories, setStories] = useState([]);
 
-  const initialStories = [
-    {
-      title: 'React',
-      url: 'https://reactjs.org',
-      author: 'Jordan Walke',
-      num_comments: 3,
-      points: 4,
-      objectID: 0,
-    },
-    {
-      title: 'Redux',
-      url: 'https://redux.js.org/',
-      author: 'Dan Abramov, Andrew Clark',
-      num_comments: 2,
-      points: 5,
-      objectID: 1,
-    }
-  ]
-
-  const [stories, setStories] = useState(initialStories);
+  useEffect(() => {
+    getAsyncStories()
+    .then((result) => {
+      setStories(result.data.stories);
+    })
+  }, []);
   const [searchTerm, setSearchTerm] = useStorageState('search', 'React');
 
   const handleSearch = (event) => {
