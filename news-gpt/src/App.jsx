@@ -7,6 +7,7 @@ const welcomeMessage = {
 
 
 function getMessage(message){
+  // Generate a welcome message.
   return `${message.greeting} to your ${message.title}`;
   
 }
@@ -16,12 +17,14 @@ const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query=';
 const storiesReducer = (state, action) => {
   switch (action.type) {
     case 'STORIES_FETCH_INIT':
+      // Initialize state for fetching stories.
       return {
         ...state,
         isLoading: true,
         isError: false,
       };
     case 'STORIES_FETCH_SUCCESS':
+      // Handle a successful fetch.
       return {
         ...state,
         isLoading: false,
@@ -29,12 +32,14 @@ const storiesReducer = (state, action) => {
         data: action.payload,
       };
     case 'STORIES_FETCH_FAILURE':
+      // Handle a fetch failure.
       return {
         ...state,
         isLoading: false,
         isError: true,
       };
     case 'REMOVE_STORY':
+      // Remove a story from the data.
       return {
         ...state,
         data: state.data.filter(
@@ -52,6 +57,7 @@ const useStorageState = (key, initialState) => {
   );
 
   useEffect(() => {
+    // Store the value in local storage.
     localStorage.setItem(key, value);
   }, [value, key]);
 
@@ -70,6 +76,7 @@ const App = () =>  {
   );
 
   useEffect(() => {
+    // Fetch stories when the component mounts.
     dispatchStories({ type: 'STORIES_FETCH_INIT' });
 
     fetch(`${API_ENDPOINT}react`)
@@ -86,6 +93,7 @@ const App = () =>  {
   }, []);
 
   const handleRemoveStory = (item) => {
+    // Remove a story.
     dispatchStories({
       type: 'REMOVE_STORY',
       payload: item,
@@ -93,19 +101,18 @@ const App = () =>  {
   };
 
   const handleSearch = (event) => {
+    // Handle search input change.
     setSearchTerm(event.target.value);
   };
 
   const searchedStories = stories.data.filter((story) =>
+    // Filter stories based on the search term.
     story.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
    <div>
      {!welcomeMessage.greeting || !welcomeMessage.title ? <p>Message must have a greeting and a title</p> : <h1>{getMessage(welcomeMessage)}</h1>}
-
-     {/* <p><em>In the textbox below, type @ followed by a keyword for a news category (e.g. @sports to get the latest sports news)</em></p> */}
-
       <InputWithLabel 
         id="search"
         value={searchTerm}
