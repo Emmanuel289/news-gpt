@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useRef, useReducer } from "react";
+import { useState, useEffect, useRef, useReducer } from "react";
 
 const welcomeMessage = {
   'greeting': 'Welcome',
