@@ -76,6 +76,11 @@ const App = () =>  {
   );
 
   useEffect(() => {
+    // If `searchTerm` is not present, e.g., null, empty string, undefined,
+    // do nothing
+    //  more generalized condition than searchTerm === ''
+
+    if (searchTerm === '') return;
     // Fetch stories when the component mounts.
     dispatchStories({ type: 'STORIES_FETCH_INIT' });
 
@@ -90,7 +95,7 @@ const App = () =>  {
       .catch(() =>
         dispatchStories({ type: 'STORIES_FETCH_FAILURE' })
       );
-  }, []);
+  }, [searchTerm]);
 
   const handleRemoveStory = (item) => {
     // Remove a story.
@@ -104,11 +109,6 @@ const App = () =>  {
     // Handle search input change.
     setSearchTerm(event.target.value);
   };
-
-  const searchedStories = stories.data.filter((story) =>
-    // Filter stories based on the search term.
-    story.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   return (
    <div>
@@ -129,7 +129,7 @@ const App = () =>  {
       ) : (
         null
       )}
-      <List list={searchedStories} onRemoveItem={handleRemoveStory} />
+      <List list={stories.data} onRemoveItem={handleRemoveStory} />
       
    </div>
   );
