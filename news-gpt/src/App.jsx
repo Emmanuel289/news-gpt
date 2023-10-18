@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useReducer } from "react";
+import { useState, useEffect, useRef, useReducer, useCallback } from "react";
 
 const welcomeMessage = {
   'greeting': 'Welcome',
@@ -75,12 +75,12 @@ const App = () =>  {
     { data: [], isLoading: false, isError: false }
   );
 
-  useEffect(() => {
+  const handleFetchStories = useCallback(() => {
     // If `searchTerm` is not present, e.g., null, empty string, undefined,
     // do nothing
     //  more generalized condition than searchTerm === ''
 
-    if (searchTerm === '') return;
+    if (!searchTerm) return;
     // Fetch stories when the component mounts.
     dispatchStories({ type: 'STORIES_FETCH_INIT' });
 
@@ -96,6 +96,10 @@ const App = () =>  {
         dispatchStories({ type: 'STORIES_FETCH_FAILURE' })
       );
   }, [searchTerm]);
+
+  useEffect(() => {
+    handleFetchStories();
+  }, [handleFetchStories]);
 
   const handleRemoveStory = (item) => {
     // Remove a story.
